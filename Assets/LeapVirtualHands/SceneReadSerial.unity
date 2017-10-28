@@ -135,7 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc1431e22182db428207e88e6316f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mPortName: COM4
+  _mBaudRate: 9600
   _mJoint: {fileID: 1583230527}
+  _mRotation: 0
 --- !u!4 &615333711
 Transform:
   m_ObjectHideFlags: 0
