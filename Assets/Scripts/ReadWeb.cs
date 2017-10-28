@@ -7,6 +7,8 @@ public class ReadWeb : MonoBehaviour
 
     public string _mIPAddress = string.Empty;
     private FingerData _mFingerData = null;
+    private FingerData _mStraight = null;
+    private FingerData _mFist = null;
 
     [System.Serializable]
     public class FingerData
@@ -40,6 +42,18 @@ public class ReadWeb : MonoBehaviour
     private void OnGUI()
     {
         GUILayout.BeginVertical(GUILayout.Height(Screen.height));
+
+        GUILayout.BeginHorizontal(GUILayout.Width(Screen.width));
+        if (GUILayout.Button("Calibrate Straight", GUILayout.Height(60)))
+        {
+            _mStraight = _mFingerData;
+        }
+        if (GUILayout.Button("Calibrate Fist", GUILayout.Height(60)))
+        {
+            _mFist = _mFingerData;
+        }
+        GUILayout.EndHorizontal();
+
         GUILayout.FlexibleSpace();
 
         if (null != _mFingerData)
