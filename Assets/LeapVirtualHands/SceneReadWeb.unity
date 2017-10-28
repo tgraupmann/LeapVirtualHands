@@ -108,6 +108,14 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &138504833 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100004, guid: ce6112dd14179d448958c91c5b4e8de2, type: 3}
+  m_PrefabInternal: {fileID: 2044648546}
+--- !u!1 &216494690 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100026, guid: ce6112dd14179d448958c91c5b4e8de2, type: 3}
+  m_PrefabInternal: {fileID: 2044648546}
 --- !u!1 &615333709
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mIPAddress: 192.168.1.20
+  _mThumb: {fileID: 1965672800}
+  _mIndex: {fileID: 138504833}
+  _mMiddle: {fileID: 2080147083}
+  _mRing: {fileID: 1601730510}
+  _mPinky: {fileID: 216494690}
 --- !u!4 &615333711
 Transform:
   m_ObjectHideFlags: 0
@@ -228,6 +241,10 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1601730510 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100036, guid: ce6112dd14179d448958c91c5b4e8de2, type: 3}
+  m_PrefabInternal: {fileID: 2044648546}
 --- !u!1 &1616460139
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +334,10 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1965672800 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100046, guid: ce6112dd14179d448958c91c5b4e8de2, type: 3}
+  m_PrefabInternal: {fileID: 2044648546}
 --- !u!1001 &2044648546
 Prefab:
   m_ObjectHideFlags: 0
@@ -363,3 +384,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ce6112dd14179d448958c91c5b4e8de2, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &2080147083 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100014, guid: ce6112dd14179d448958c91c5b4e8de2, type: 3}
+  m_PrefabInternal: {fileID: 2044648546}
