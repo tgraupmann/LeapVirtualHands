@@ -40,6 +40,13 @@ public class ReadWeb : MonoBehaviour
             yield break;
         }
 
+        StartCoroutine(DoRequests());
+        StartCoroutine(DoRequests());
+        StartCoroutine(DoRequests());
+    }
+
+    IEnumerator DoRequests()
+    {
         while (true)
         {
             string url = string.Format("http://{0}", _mIPAddress);
@@ -48,7 +55,11 @@ public class ReadWeb : MonoBehaviour
             string json = www.text;
             www.Dispose();
             //Debug.Log(json);
-            _mFingerData = JsonUtility.FromJson<FingerData>(json);
+            FingerData fingerData = JsonUtility.FromJson<FingerData>(json);
+            if (null != fingerData)
+            {
+                _mFingerData = fingerData;
+            }
             yield return new WaitForSeconds(0.1f);
         }
     }
