@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,11 @@ public class ReadWeb : MonoBehaviour
     public GameObject _mRing = null;
     public GameObject _mPinky = null;
     private FingerData _mFingerData = null;
-    private FingerData _mStraight = null;
-    private FingerData _mFist = null;
+    private FingerData _mStraight = new FingerData();
+    private FingerData _mFist = new FingerData();
     private Dictionary<GameObject, Vector3> _mOriginalEulers = new Dictionary<GameObject, Vector3>();
+    private const string KEY_STRAIGHT = "Straight";
+    private const string KEY_FIST = "Fist";
 
     [System.Serializable]
     public class FingerData
@@ -40,8 +43,23 @@ public class ReadWeb : MonoBehaviour
             yield break;
         }
 
-        StartCoroutine(DoRequests());
-        StartCoroutine(DoRequests());
+        if (PlayerPrefs.HasKey(KEY_STRAIGHT))
+        {
+            string json = PlayerPrefs.GetString(KEY_STRAIGHT);
+            if (!string.IsNullOrEmpty(json))
+            {
+                _mStraight = JsonUtility.FromJson<FingerData>(json);
+            }
+        }
+        if (PlayerPrefs.HasKey(KEY_FIST))
+        {
+            string json = PlayerPrefs.GetString(KEY_FIST);
+            if (!string.IsNullOrEmpty(json))
+            {
+                _mFist = JsonUtility.FromJson<FingerData>(json);
+            }
+        }
+
         StartCoroutine(DoRequests());
     }
 
@@ -50,17 +68,38 @@ public class ReadWeb : MonoBehaviour
         while (true)
         {
             string url = string.Format("http://{0}", _mIPAddress);
+            DateTime timeout = DateTime.Now + TimeSpan.FromMilliseconds(500);
             WWW www = new WWW(url);
-            yield return www;
-            string json = www.text;
-            www.Dispose();
-            //Debug.Log(json);
-            FingerData fingerData = JsonUtility.FromJson<FingerData>(json);
-            if (null != fingerData)
+            while (DateTime.Now < timeout &&
+                string.IsNullOrEmpty(www.error) &&
+                !www.isDone)
             {
-                _mFingerData = fingerData;
+                yield return null;
             }
-            yield return new WaitForSeconds(0.1f);
+            string json = null;
+            if (timeout <= DateTime.Now)
+            {
+                Debug.LogError("WWW Timeout");
+            }
+            else if (!string.IsNullOrEmpty(www.error))
+            {
+                Debug.LogError(www.error);
+            }
+            else if (www.isDone)
+            {
+                json = www.text;
+            }
+            www.Dispose();
+            if (!string.IsNullOrEmpty(json))
+            {
+                //Debug.Log(json);
+                FingerData fingerData = JsonUtility.FromJson<FingerData>(json);
+                if (null != fingerData)
+                {
+                    _mFingerData = fingerData;
+                }
+            }
+            yield return null;
         }
     }
 
@@ -72,10 +111,18 @@ public class ReadWeb : MonoBehaviour
         if (GUILayout.Button("Calibrate Straight", GUILayout.Height(60)))
         {
             _mStraight = _mFingerData;
+            if (null != _mStraight)
+            {
+                PlayerPrefs.SetString(KEY_STRAIGHT, JsonUtility.ToJson(_mStraight));
+            }
         }
         if (GUILayout.Button("Calibrate Fist", GUILayout.Height(60)))
         {
             _mFist = _mFingerData;
+            if (null != _mFist)
+            {
+                PlayerPrefs.SetString(KEY_FIST, JsonUtility.ToJson(_mFist));
+            }
         }
         GUILayout.EndHorizontal();
 
